@@ -4,13 +4,13 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 import { applyRotation, applyScaling } from './die/state-manipulators'
 
-const Die = ({ modelPath, ...props }) => {
+const Die = ({ children, sides, ...props }) => {
   const [state, setState] = useState({
     hovered: false,
     spinAcceleration: 0,
     accelerating: false
   })
-  const { nodes } = useLoader(GLTFLoader, modelPath);
+  const { nodes } = useLoader(GLTFLoader, `models/d${sides}.glb`);
   const mesh = useRef()
 
   const handleClick = () => {
@@ -53,6 +53,7 @@ const Die = ({ modelPath, ...props }) => {
         color={0x888888}
         roughness={0.0}
         metalness={0.3} />
+      {children}
     </mesh>
   );
 }
