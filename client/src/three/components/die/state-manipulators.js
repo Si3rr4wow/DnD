@@ -1,7 +1,3 @@
-import React, { useRef, useState } from "react";
-import { useLoader, useFrame } from "react-three-fiber";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-
 const acceleration = 0.001
 
 const isStationaryWithImpulse = state => (
@@ -20,7 +16,7 @@ const isInStopRegion = state => (
   state.spinAcceleration < 0.002
 )
 
-const applyRotation = (mesh, setState) => {
+export const applyRotation = (mesh, setState) => {
   setState(s => {
     let nextSpinAcceleration
     let nextAccelerating = s.accelerating
@@ -48,7 +44,7 @@ const applyRotation = (mesh, setState) => {
   })
 }
 
-const applyScaling = (mesh, state) => {
+export const applyScaling = (mesh, state) => {
   if(state.hovered && mesh.current.scale.length() < 1.2) {
     mesh.current.scale.x =
     mesh.current.scale.y =
@@ -60,58 +56,3 @@ const applyScaling = (mesh, state) => {
     mesh.current.scale.z -= 0.03
   }
 }
-
-const D4 = props => {
-  const [state, setState] = useState({
-    hovered: false,
-    spinAcceleration: 0,
-    accelerating: false
-  })
-  const { nodes } = useLoader(GLTFLoader, "models/d4.glb");
-  const mesh = useRef()
-
-  const handleClick = () => {
-    setState(s => ({
-      ...s,
-      accelerating: true
-    }))
-  }
-
-  const handlePointerOver = () => {
-    setState(s => ({
-      ...s,
-      hovered: true
-    }))
-  }
-
-  const handlePointerOut = () => {
-    setState(s => ({
-      ...s,
-      hovered: false
-    }))
-  }
-
-  useFrame(() => {
-    if(!mesh.current) { return }
-    applyRotation(mesh, setState)
-    applyScaling(mesh, state)
-  })
-
-  return (
-    <mesh visible
-      {...props}
-      ref={mesh}
-      geometry={nodes.Circle.geometry}
-      onClick={handleClick}
-      onPointerOver={handlePointerOver}
-      onPointerOut={handlePointerOut} >
-      <meshStandardMaterial
-        attach="material"
-        color={0x888888}
-        roughness={0.7}
-        metalness={0.3} />
-    </mesh>
-  );
-}
-
-export default D4
