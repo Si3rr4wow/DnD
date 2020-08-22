@@ -1,7 +1,9 @@
 import Box from './box'
-import Something from './something'
+import D4 from './d4'
+import Loading from './loading'
 
 export {
   Box,
-  Something
+  D4,
+  Loading
 }

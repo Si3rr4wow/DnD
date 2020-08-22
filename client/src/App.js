@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { Canvas } from 'react-three-fiber'
 
-import { Box, Something } from './three'
+import { Box, D4, Loading } from './three'
 
 function App() {
   return (
-    <div>
+    <>
       <h1>threejs render test</h1>
-      <Canvas colorManagement>
+      <Canvas colorManagement style={{ background: "#171717" }}>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
-        <Box position={[-1.2, 0, 0]} />
-        <Box position={[1.2, 0, 0]} />
-        <Something position={[3.6, 0, 0]}/>
+        <Suspense fallback={Loading}>
+          <D4 position={[0, 0, 0]}/>
+        </Suspense>
       </Canvas>
-    </div>
+    </>
   );
 }
 
