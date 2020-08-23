@@ -3,6 +3,7 @@ import React, { Suspense } from 'react';
 import { Canvas } from 'react-three-fiber'
 
 import { Die, Loading } from '../three'
+import Quote from './quote-generator'
 
 import styled from '@emotion/styled'
 
@@ -30,17 +31,24 @@ const Overlay = styled.div`
 `
 
 const Jumbotron = styled.div`
-  padding: 0 2rem;
+  padding: 2rem;
   margin: auto;
   border-radius: 10px;
   border: 1px solid #b5b5b5;
   box-shadow: 0px 3px 5px 0px #27272740;
+  display: flex;
+  flex-direction: column;
 
   user-select: none;
 
   h1 {
+    margin: 0;
     font-weight: 100;
     font-size: 5rem;
+    text-align: center;
+  }
+  div {
+    margin: auto;
   }
 `
 
@@ -50,10 +58,11 @@ function App() {
       <div style={{ width: '100%', height: '100%' }}>
         <Overlay showGradient>
           <div style={{ color: 'white', display: 'flex', height: '100%' }}>
-            <Jumbotron>
+            <Jumbotron style={{ width: '575px', height: '250px' }}>
               <h1>
                 Roll the Bones
               </h1>
+              <Quote/>
             </Jumbotron>
           </div>
         </Overlay>
