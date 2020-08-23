@@ -71,10 +71,11 @@ function App() {
           <pointLight position={[-20, 20, 10]} intensity={2} color={0x81f7f7}/>
           <pointLight position={[20, 20, 10]} intensity={2} color={0xf781c2}/>
           <Suspense fallback={Loading}>
-            <Die sides="4" position={[-3, 0, 0]}/>
-            <Die sides="6" position={[-1, 0, 0]}/>
-            <Die sides="12" position={[+1, 0, 0]}/>
-            <Die sides="20" position={[+3, 0, 0]}/>
+            <Die sides="4" position={[-4, 0, 0]}/>
+            <Die sides="6" position={[-2, 0, 0]}/>
+            <Die sides="8" position={[0, 0, 0]}/>
+            <Die sides="12" position={[2, 0, 0]}/>
+            <Die sides="20" position={[4, 0, 0]}/>
           </Suspense>
         </Canvas>
         <Underlay showGradient>
