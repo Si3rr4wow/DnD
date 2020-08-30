@@ -5,11 +5,8 @@ import {
   Store,
 } from 'relay-runtime';
 
-function fetchQuery(
-  operation,
-  variables,
-) {
-  return fetch('http://localhost:4000/graphql', {
+const fetchQuery = async (operation, variables) => {
+  const res = await fetch('http://localhost:4000/graphql', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -18,9 +15,9 @@ function fetchQuery(
       query: operation.text,
       variables,
     }),
-  }).then(response => {
-    return response.json();
-  });
+  })
+  const json = await res.json()
+  return json
 }
 
 const environment = new Environment({

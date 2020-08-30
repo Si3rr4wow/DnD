@@ -8,7 +8,7 @@ import {
   Jumbotron,
   QuoteGenerator,
   UnstyledInput,
-  Search
+  GetWikiaArticle
 } from '../components'
 
 import styled from '@emotion/styled'
@@ -44,7 +44,7 @@ function App() {
           <BorderDiv style={{ margin: '1%', padding: '5px', color: 'white' }}>
             <UnstyledInput style={{ width: '100%', color: 'white' }}/>
           </BorderDiv>
-          <Search _id={6356}/>
+          <GetWikiaArticle _id={6356}/>
           <div style={{ color: 'white', display: 'flex', height: '100%' }}>
             <Jumbotron style={{ width: '575px', height: '250px' }}>
               <h1>

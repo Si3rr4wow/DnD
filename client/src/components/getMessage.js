@@ -4,30 +4,28 @@ import graphql from 'babel-plugin-relay/macro'
 
 import environment from '../relay/environment'
 
-const Search = ({ _id }) => {
+const Search = (props) => {
+  const numDice = 3
+  const _id = "5f3c34c5942b0155fcf9ecb1"
+
   return (
     <QueryRenderer
       environment={environment}
       query={graphql`
-        query getWikiaArticleQuery($_id: ID!) {
-          sections {
-            images {
-              src
-              caption
-            }
-          }
+        query getMessageQuery($_id: ID!) {
+          _id
         }
       `}
       variables={{_id}}
-      render={({error, props}) => {
-        console.log(props)
-        if (error) {
+      render={({e, p}) => {
+        console.log('props', p)
+        if (e) {
           return <div>Error!</div>;
         }
-        if (!props) {
+        if (!p) {
           return <div>Loading...</div>;
         }
-        return <div>first section title: {props.sections[0].title}</div>;
+        return <div>first section title: {p}</div>;
       }} />
   )
 }

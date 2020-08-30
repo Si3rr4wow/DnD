@@ -1,9 +1,9 @@
 const {
-  getWikiaArticleResolver,
+  GetWikiaArticleResolver,
   searchWikiaArticlesResolver
 } = require('../resolvers/wikia-article')
 
 module.exports = {
-  getWikiaArticle: getWikiaArticleResolver,
+  GetWikiaArticle: GetWikiaArticleResolver,
   searchWikiaArticles: searchWikiaArticlesResolver
 }
