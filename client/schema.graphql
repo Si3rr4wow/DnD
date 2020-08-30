@@ -1,0 +1,60 @@
+type Message {
+  _id: ID!
+  content: String
+  author: String
+}
+
+input MessageInput {
+  content: String
+  author: String
+}
+
+type Mutation {
+  createMessage(input: MessageInput): Message
+  updateMessage(_id: ID!, input: MessageInput): Message
+}
+
+type Query {
+  hello: String
+  rollDice(numDice: Int!, numSides: Int): [Int]
+  getMessage(_id: ID!): Message
+  getWikiaArticle(_id: ID!): WikiaArticle
+  searchWikiaArticles(searchTerm: String): WikiaSearchResults
+}
+
+type WikiaArticle {
+  _id: ID!
+  sections: [WikiaArticleSection]
+}
+
+type WikiaArticleImage {
+  src: String
+  caption: String
+}
+
+type WikiaArticleSection {
+  title: String
+  level: Int
+  content: [WikiaAtricleContent]
+  images: [WikiaArticleImage]
+}
+
+type WikiaAtricleContent {
+  type: String
+  text: String
+}
+
+type WikiaSearchResult {
+  id: Int
+  title: String
+  snippet: String
+  url: String
+}
+
+type WikiaSearchResults {
+  batches: Int
+  currentBatch: Int
+  next: Int
+  total: Int
+  items: [WikiaSearchResult]
+}

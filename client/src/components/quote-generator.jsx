@@ -37,7 +37,7 @@ const quotes = [{
 
 const fadeDuration = 500
 
-const Quote = () => {
+const QuoteGenerator = () => {
   const [state, setState] = useState({
     visible: false,
     quote: {}
@@ -68,4 +68,4 @@ const Quote = () => {
   )
 }
 
-export default Quote
+export default QuoteGenerator

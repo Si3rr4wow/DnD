@@ -3,7 +3,13 @@ import React, { Suspense } from 'react';
 import { Canvas } from 'react-three-fiber'
 
 import { Die, Loading } from '../three'
-import Quote from './quote-generator'
+import {
+  BorderDiv,
+  Jumbotron,
+  QuoteGenerator,
+  UnstyledInput,
+  Search
+} from '../components'
 
 import styled from '@emotion/styled'
 
@@ -26,30 +32,8 @@ const Overlay = styled.div`
   z-index: 1;
 
   background: ${({ showGradient }) => (
-    showGradient ? 'linear-gradient(180deg, #3c3c3c, transparent);' : ''
+    showGradient ? 'linear-gradient(180deg, #222, transparent);' : ''
   )}
-`
-
-const Jumbotron = styled.div`
-  padding: 2rem;
-  margin: auto;
-  border-radius: 10px;
-  border: 1px solid #b5b5b5;
-  box-shadow: 0px 3px 5px 0px #27272740;
-  display: flex;
-  flex-direction: column;
-
-  user-select: none;
-
-  h1 {
-    margin: 0;
-    font-weight: 100;
-    font-size: 5rem;
-    text-align: center;
-  }
-  div {
-    margin: auto;
-  }
 `
 
 function App() {
@@ -57,12 +41,16 @@ function App() {
     <>
       <div style={{ width: '100%', height: '100%' }}>
         <Overlay showGradient>
+          <BorderDiv style={{ margin: '1%', padding: '5px', color: 'white' }}>
+            <UnstyledInput style={{ width: '100%', color: 'white' }}/>
+          </BorderDiv>
+          <Search _id={6356}/>
           <div style={{ color: 'white', display: 'flex', height: '100%' }}>
             <Jumbotron style={{ width: '575px', height: '250px' }}>
               <h1>
                 Roll the Bones
               </h1>
-              <Quote/>
+              <QuoteGenerator/>
             </Jumbotron>
           </div>
         </Overlay>
@@ -81,7 +69,6 @@ function App() {
         <Underlay showGradient>
           <div style={{ color: '#3a3a3a', display: 'flex', height: '100%' }}>
             <p>
-              "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
             </p>
           </div>
         </Underlay>
