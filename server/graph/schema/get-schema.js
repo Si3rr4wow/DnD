@@ -4,7 +4,7 @@ const { getMutation } = require('./mutation')
 const { getTypes } = require('./types')
 const { getInputs } = require('./inputs')
 
-const queryString = `
+const schemaString = `
   ${getQuery()}
 
   ${getMutation()}
@@ -14,6 +14,6 @@ const queryString = `
   ${getInputs()}
 `
 
-const getSchema = () => buildSchema(queryString)
+const getSchema = () => buildSchema(schemaString)
 
 module.exports = getSchema
