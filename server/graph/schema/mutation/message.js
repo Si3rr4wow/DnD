@@ -28,5 +28,5 @@ module.exports = `
 //     }
 //   })
 // })
-//   .then(r => r.json())
-//   .then(data => console.log('data returned:', data));
+// .then(r => r.json())
+// .then(data => console.log('data returned:', data));
