@@ -15,6 +15,18 @@ type Image {
   mediumUrl: String
   largeUrl: String
 }
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+type ArticleEdge {
+  node: Article!,
+  cursor: ID!
+}
+type ArticleConnection {
+  pageInfo: PageInfo
+  edges: [ArticleEdge]
+}
 type Article implements Node {
   id: ID!
   name: String
@@ -22,7 +34,7 @@ type Article implements Node {
   brand: Brand
   genders: [Gender]
   images: [Image]
-  recommendations: [Article]
+  recommendations(first: Int, last: Int, before: ID, after: ID): ArticleConnection
 }
 type Query {
   Article(id: ID!): Article

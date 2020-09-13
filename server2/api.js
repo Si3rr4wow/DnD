@@ -19,7 +19,7 @@ const articles = {
       name: 'Brand2',
       logo: 'https://img.articles.com/Brand2'
     },
-    genders: ['MALE', 'FEMALE'],
+    genders: ['FEMALE'],
     images: [],
     recommendations: []
   },
@@ -31,7 +31,7 @@ const articles = {
       name: 'Brand3',
       logo: 'https://img.articles.com/Brand3'
     },
-    genders: ['MALE', 'FEMALE'],
+    genders: ['FEMALE'],
     images: [],
     recommendations: []
   }
@@ -43,12 +43,17 @@ exports.fetchArticle = id => {
 }
 
 exports.fetchNode = id => {
-  console.log('ID', id)
   return articles[id]
 }
 
 // curl -X POST -H "Content-Type: text/plain" -d "{ Articles{ name } }" http://localhost:3001/graphql -v
 exports.fetchArticles = () => {
-  console.log('fetch called')
   return Object.values(articles)
+}
+
+exports.fetchRecommendations = (id) => {
+  console.log('fetching recommendations')
+  const recommendations = { ...articles }
+  delete recommendations[id]
+  return Object.values(recommendations)
 }
