@@ -1,0 +1,32 @@
+{
+  "name": "articles-client",
+  "version": "1.0.0",
+  "description": "A Relay client from server2",
+  "main": "src/index.js",
+  "author": "Mark Potter",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-relay": "^10.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-relay": "^10.0.1",
+    "graphql": "^15.3.0",
+    "html-webpack-plugin": "^5.0.0-alpha.9",
+    "relay-compiler": "^10.0.1",
+    "relay-config": "^10.0.1",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "scripts": {
+    "start": "webpack serve",
+    "build": "webpack",
+    "relay": "relay-compiler --src ./src --schema ./schema.graphql"
+  }
+}

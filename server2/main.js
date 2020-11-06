@@ -167,7 +167,16 @@ const schema = new GraphQLSchema({
 })
 
 const app = express()
-app.use('/graphql', graphqlHTTP({
+
+const corsOrigin = 'http://localhost:8080'
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', corsOrigin);
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, X-Auth-Token, Accept');
+  next();
+});
+
+app.post('/graphql', graphqlHTTP({
   schema,
   graphiql: true
 }));

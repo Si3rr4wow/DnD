@@ -1,0 +1,43 @@
+interface Node {
+  id: ID!
+}
+type Brand {
+  name: String
+  logoUrl: String
+}
+enum Gender {
+  MALE
+  FEMALE
+}
+type Image {
+  thumbnailUrl: String
+  smallUrl: String
+  mediumUrl: String
+  largeUrl: String
+}
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+type ArticleEdge {
+  node: Article!,
+  cursor: ID!
+}
+type ArticleConnection {
+  pageInfo: PageInfo
+  edges: [ArticleEdge]
+}
+type Article implements Node {
+  id: ID!
+  name: String
+  thumbnailUrl: String
+  brand: Brand
+  genders: [Gender]
+  images: [Image]
+  recommendations(first: Int, last: Int, before: ID, after: ID): ArticleConnection
+}
+type Query {
+  Article(id: ID!): Article
+  Articles: [Article]
+  node(id: ID!): Node
+}
