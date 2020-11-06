@@ -52,7 +52,6 @@ exports.fetchArticles = () => {
 }
 
 exports.fetchRecommendations = (id) => {
-  console.log('fetching recommendations')
   const recommendations = { ...articles }
   delete recommendations[id]
   return Object.values(recommendations)

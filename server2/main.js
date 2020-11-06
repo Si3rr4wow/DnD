@@ -121,7 +121,6 @@ const articleType = new GraphQLObjectType({
         after: { type: GraphQLID }
       },
       resolve: (article, args) => {
-        console.log('resolver')
         return connectionFromArray(
           api.fetchRecommendations(article.id),
           args
@@ -147,17 +146,10 @@ const queryType = new GraphQLObjectType({
       resolve: (_, { id }) => api.fetchNode(id)
     },
     Articles: {
-      type: new GraphQLList(articleType),
-      // resolve: () => api.fetchArticles()
+      type: new GraphQLList(articleType)
     },
     Article: {
-      type: articleType,
-      // args: {
-      //   id: { type: GraphQLString }
-      // },
-      // resolve: (_, { id }) => {
-      //   return api.fetchArticle(id)
-      // }
+      type: articleType
     }
   }
 })
@@ -177,6 +169,10 @@ app.use(function(req, res, next) {
 });
 
 app.post('/graphql', graphqlHTTP({
+  schema
+}));
+
+app.get('/graphql', graphqlHTTP({
   schema,
   graphiql: true
 }));
