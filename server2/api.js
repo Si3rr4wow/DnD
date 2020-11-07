@@ -8,8 +8,7 @@ const articles = {
       logo: 'https://img.articles.com/Brand1'
     },
     genders: ['MALE', 'FEMALE'],
-    images: [],
-    recommendations: []
+    images: []
   },
   "2": {
     id: "2",
@@ -20,8 +19,7 @@ const articles = {
       logo: 'https://img.articles.com/Brand2'
     },
     genders: ['FEMALE'],
-    images: [],
-    recommendations: []
+    images: []
   },
   "3": {
     id: "3",
@@ -32,27 +30,30 @@ const articles = {
       logo: 'https://img.articles.com/Brand3'
     },
     genders: ['FEMALE'],
-    images: [],
-    recommendations: []
+    images: []
   }
 }
 
-// curl -X POST -H "Content-Type: text/plain" -d "{ Article(id: 1) { name } }" http://localhost:3001/graphql -v
-exports.fetchArticle = id => {
-  return articles[id]
+const universalize = (node, resourceKey) => {
+  return {
+    ...node,
+    id: `${resourceKey}_${node.id}`
+  }
+}
+
+const resourceMap = {
+  'art': articles
 }
 
 exports.fetchNode = id => {
-  return articles[id]
+  const [resourceKey, _id] = id.split('_')
+  const doc = resourceMap[resourceKey][_id]
+  return universalize(doc, resourceKey)
 }
 
-// curl -X POST -H "Content-Type: text/plain" -d "{ Articles{ name } }" http://localhost:3001/graphql -v
-exports.fetchArticles = () => {
-  return Object.values(articles)
-}
-
-exports.fetchRecommendations = (id) => {
+exports.fetchArticleRecommendations = (id) => {
   const recommendations = { ...articles }
-  delete recommendations[id]
+  const [, _id] = id.split('_')
+  delete recommendations[_id]
   return Object.values(recommendations)
 }

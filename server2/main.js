@@ -122,7 +122,7 @@ const articleType = new GraphQLObjectType({
       },
       resolve: (article, args) => {
         return connectionFromArray(
-          api.fetchRecommendations(article.id),
+          api.fetchArticleRecommendations(article.id),
           args
         )
       }
