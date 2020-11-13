@@ -12,7 +12,7 @@ export type Gender = "FEMALE" | "MALE" | "%future added value";
 export type ArticleQueryVariables = {||};
 export type ArticleQueryResponse = {|
   +node: ?{|
-    +id: string,
+    +id: ?string,
     +name?: ?string,
     +genders?: ?$ReadOnlyArray<?Gender>,
     +brand?: ?{|
@@ -20,8 +20,8 @@ export type ArticleQueryResponse = {|
     |},
     +recommendations?: ?{|
       +edges: ?$ReadOnlyArray<?{|
-        +node: {|
-          +id: string
+        +node: ?{|
+          +id: ?string
         |}
       |}>
     |},
@@ -36,7 +36,7 @@ export type ArticleQuery = {|
 
 /*
 query ArticleQuery {
-  node(id: "3") {
+  node(id: "art_3") {
     __typename
     id
     ... on Article {
@@ -45,9 +45,10 @@ query ArticleQuery {
       brand {
         name
       }
-      recommendations(first: 4) {
+      recommendations(first: 1) {
         edges {
           node {
+            __typename
             id
           }
         }
@@ -62,7 +63,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "3"
+    "value": "art_3"
   }
 ],
 v1 = {
@@ -80,71 +81,37 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "kind": "InlineFragment",
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "genders",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Brand",
+  "kind": "LinkedField",
+  "name": "brand",
+  "plural": false,
   "selections": [
-    (v2/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "genders",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Brand",
-      "kind": "LinkedField",
-      "name": "brand",
-      "plural": false,
-      "selections": [
-        (v2/*: any*/)
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 4
-        }
-      ],
-      "concreteType": "ArticleConnection",
-      "kind": "LinkedField",
-      "name": "recommendations",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArticleEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Article",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                (v1/*: any*/)
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "recommendations(first:4)"
-    }
+    (v2/*: any*/)
   ],
-  "type": "Article",
-  "abstractKey": null
+  "storageKey": null
+},
+v5 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1
+  }
+],
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -162,12 +129,55 @@ return {
         "plural": false,
         "selections": [
           (v1/*: any*/),
-          (v3/*: any*/)
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              {
+                "alias": null,
+                "args": (v5/*: any*/),
+                "concreteType": "ArticleConnection",
+                "kind": "LinkedField",
+                "name": "recommendations",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ArticleEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v1/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "recommendations(first:1)"
+              }
+            ],
+            "type": "Article",
+            "abstractKey": null
+          }
         ],
-        "storageKey": "node(id:\"3\")"
+        "storageKey": "node(id:\"art_3\")"
       }
     ],
-    "type": "Query",
+    "type": "RootQueryType",
     "abstractKey": null
   },
   "kind": "Request",
@@ -184,31 +194,69 @@ return {
         "name": "node",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "__typename",
-            "storageKey": null
-          },
+          (v6/*: any*/),
           (v1/*: any*/),
-          (v3/*: any*/)
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              {
+                "alias": null,
+                "args": (v5/*: any*/),
+                "concreteType": "ArticleConnection",
+                "kind": "LinkedField",
+                "name": "recommendations",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ArticleEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v6/*: any*/),
+                          (v1/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "recommendations(first:1)"
+              }
+            ],
+            "type": "Article",
+            "abstractKey": null
+          }
         ],
-        "storageKey": "node(id:\"3\")"
+        "storageKey": "node(id:\"art_3\")"
       }
     ]
   },
   "params": {
-    "cacheID": "7a67c14d2049d6631bb5b5f8adc9a92b",
+    "cacheID": "91aaf3523833bcbfafb0ef10e2e2dd44",
     "id": null,
     "metadata": {},
     "name": "ArticleQuery",
     "operationKind": "query",
-    "text": "query ArticleQuery {\n  node(id: \"3\") {\n    __typename\n    id\n    ... on Article {\n      name\n      genders\n      brand {\n        name\n      }\n      recommendations(first: 4) {\n        edges {\n          node {\n            id\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArticleQuery {\n  node(id: \"art_3\") {\n    __typename\n    id\n    ... on Article {\n      name\n      genders\n      brand {\n        name\n      }\n      recommendations(first: 1) {\n        edges {\n          node {\n            __typename\n            id\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4d796dc24a734cf1e1fcf973b0de9894';
+(node/*: any*/).hash = '3e0d4df14d1ec1e573fbf4507ceafcdb';
 
 module.exports = node;

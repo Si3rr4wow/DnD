@@ -1,16 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { graphql, useFragment } from 'react-relay/hooks'
 
+import ArticleList from './ArticleList.jsx'
 import Article from './Article.jsx'
 
-class App extends React.Component {
-  render() {
-    return (
-      <>
-        <h1>fuk u cunt</h1>
-        <Article/>
-      </>
-    )
-  }
+const App = () => {
+  const data = useFragment(graphql`
+    fragment app on Viewer {
+      articles {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }
+  `)
+  console.log('DATA', data)
+
+  return (
+    <div>
+      <ArticleList articles={data}/>
+      <Article/>
+    </div>
+  )
 }
 
 export default App

@@ -9,7 +9,7 @@ const Article = () => {
     environment={environment}
     query={graphql`
       query ArticleQuery {
-        node(id: "3"){
+        node(id: "art_3"){
           id
           ...on Article {
             name
@@ -17,7 +17,7 @@ const Article = () => {
             brand {
               name
             }
-            recommendations(first: 4) {
+            recommendations(first: 1) {
               edges {
                 node {
                   id

@@ -27,6 +27,6 @@
   "scripts": {
     "start": "webpack serve",
     "build": "webpack",
-    "relay": "relay-compiler --src ./src --schema ./schema.graphql"
+    "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx"
   }
 }

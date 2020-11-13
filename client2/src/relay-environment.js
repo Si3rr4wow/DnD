@@ -7,6 +7,7 @@ import {
 
 
 function fetchQuery(operation, variables) {
+  console.log('OPERATION', operation)
   return fetch('http://localhost:3001/graphql', {
     method: 'POST',
     headers: {

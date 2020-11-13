@@ -4,10 +4,10 @@
   the returned objects until only scalar types (Int, String…) are left.
 
   https://engineering.zalando.com/posts/2017/02/building-a-relay-compatible-graphql-server.html
+
+  https://github.com/prayerslayer/zalando-graphql-relay
 */
 
-// const fs = require('fs')
-// const bodyParser = require('body-parser')
 const {
   graphql,
   GraphQLSchema,
@@ -26,14 +26,45 @@ const express = require('express')
 const { graphqlHTTP } = require('express-graphql');
 const api = require('./api')
 
-// const Schema = String(fs.readFileSync('./data/schema.graphql'))
-// const jsSchema = buildSchema(Schema);
-//
-// const queryResolver = {
-//   Article: ({ id }) => api.fetchArticle(id),
-//   Articles: () => api.fetchArticles(),
-//   node: ({ id }) => api.fetchArticle(id)
-// };
+function toConnection(apiCall, params) {
+  const {before, after, first, last} = params;
+  return apiCall.then(items => {
+    // before/after filter
+    let filteredItems = items
+    if (before || after) {
+      let beforeIdx = items.findIndex(r => r.id === before);
+      let afterIdx = items.findIndex(r => r.id === after);
+      if (beforeIdx === -1) {
+        beforeIdx = Infinity
+      }
+      filteredItems = items.filter((_, i) => i < beforeIdx && i > afterIdx)
+    }
+    const pageInfo = {
+      hasPreviousPage: !last ? false : filteredItems.length > last,
+      hasNextPage: !first ? false : filteredItems.length > first
+    };
+    return [filteredItems, pageInfo]
+  })
+  .then(([items, pageInfo]) => {
+    // first/last filter
+    if (first || last) {
+      if (first > 0) {
+        return [items.slice(0, first), pageInfo]
+      } else if (last > 0) {
+        return [items.slice(last * -1), pageInfo]
+      }
+      throw new Error(`first or last has zero or negative value`)
+    }
+    return [items, pageInfo]
+  })
+  .then(([items, pageInfo]) => ({
+    pageInfo,
+    edges: items.map(r => ({
+      node: r,
+      cursor: r.id
+    }))
+  }))
+}
 
 const nodeType = new GraphQLInterfaceType({
   name: 'Node',
@@ -130,10 +161,38 @@ const articleType = new GraphQLObjectType({
   },
 })
 
-/*
-  Notice that resolvers and arguments are no longer required for rootQueryFields
-  once they are accessible via a node interface.
-*/
+const viewerType = new GraphQLObjectType({
+  name: 'Viewer',
+  fields: {
+    article: {
+      type: articleType,
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLID)
+        }
+      },
+      resolve: (_, {id}) => api.fetchArticle(id)
+    },
+    articles: {
+      type: articleConnectionType,
+      args: {
+        first: {
+          type: GraphQLInt
+        },
+        last: {
+          type: GraphQLInt
+        },
+        before: {
+          type: GraphQLID
+        },
+        after: {
+          type: GraphQLID
+        }
+      },
+      resolve: (_, params) => toConnection(api.fetchArticles(), params)
+    }
+  }
+});
 
 const queryType = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -145,8 +204,30 @@ const queryType = new GraphQLObjectType({
       },
       resolve: (_, { id }) => api.fetchNode(id)
     },
+    Viewer: {
+      type: viewerType,
+      resolve: () => ({
+        articles: {},
+        article: {}
+      })
+    },
     Articles: {
-      type: new GraphQLList(articleType)
+      type: articleConnectionType,
+      args: {
+        first: {
+          type: GraphQLInt
+        },
+        last: {
+          type: GraphQLInt
+        },
+        before: {
+          type: GraphQLID
+        },
+        after: {
+          type: GraphQLID
+        }
+      },
+      resolve: (_, params) => toConnection(api.fetchArticles(), params)
     },
     Article: {
       type: articleType

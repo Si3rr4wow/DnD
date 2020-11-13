@@ -51,6 +51,11 @@ exports.fetchNode = id => {
   return universalize(doc, resourceKey)
 }
 
+exports.fetchArticles = () => new Promise(resolve => {
+  console.log('fetching')
+  resolve(Object.values(articles).map(doc => universalize(doc, 'art')))
+})
+
 exports.fetchArticleRecommendations = (id) => {
   const recommendations = { ...articles }
   const [, _id] = id.split('_')
